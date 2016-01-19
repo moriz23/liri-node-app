@@ -22,20 +22,28 @@ switch(params[0]) {
     } else
       movieName("Mr. Nobody");
     break;
+  case "do-what-it-says":
+    readMe(params[0]);
+    break;
 }
 
 function twitterStatus() {
   var client = new Twitter({
-    consumer_key: key.twitterKeys.consumer_key,
-    consumer_secret: key.twitterKeys.consumer_secret,
-    access_token_key: key.twitterKeys.access_token_key,
-    access_token_secret: key.twitterKeys.access_token_secret
+    consumer_key: keys.twitterKeys.consumer_key,
+    consumer_secret: keys.twitterKeys.consumer_secret,
+    access_token_key: keys.twitterKeys.access_token_key,
+    access_token_secret: keys.twitterKeys.access_token_secret
   });
   var params = {screen_name: 'ur_mom06'};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
     if (!error) {
-      console.log(data.tweets);
-    };
+      console.log("Here are your last 20 tweets:");
+        for (var i = 0; i < 20; i++) {
+        console.log((i+1)+". "+tweets[i].text);
+        };
+    } else if (error) {
+        console.log("error");
+    }
   });
 };
 
@@ -83,6 +91,13 @@ function movieName() {
         });
     };
   });
+};
+
+function readMe() {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    data = data.split(",");
+    spotifySong(data[1])
+  }); 
 };
 
 
