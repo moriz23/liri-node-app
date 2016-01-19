@@ -37,8 +37,8 @@ function twitterStatus() {
   var params = {screen_name: 'ur_mom06'};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
     if (!error) {
-      for (var i = 0; i < 20; i++) {
-        console.log((i+1)+". "+tweets[i].text);
+      for (var i = 0; i < data.length; i++) {
+        console.log(data.text[i]);
       };
     } else if (error) {
         console.log("error");
