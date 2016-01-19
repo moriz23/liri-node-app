@@ -37,10 +37,9 @@ function twitterStatus() {
   var params = {screen_name: 'ur_mom06'};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
     if (!error) {
-      console.log("Here are your last 20 tweets:");
-        for (var i = 0; i < 20; i++) {
+      for (var i = 0; i < 20; i++) {
         console.log((i+1)+". "+tweets[i].text);
-        };
+      };
     } else if (error) {
         console.log("error");
     }
