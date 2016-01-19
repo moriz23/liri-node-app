@@ -61,3 +61,50 @@ function spotifySong() {
     }
   });
 }
+
+function movieName() {
+  request("http://www.omdbapi.com/?t="+params[1]+"&y=&plot=short&r=json", function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      body = JSON.parse(body);
+        console.log("Title: "+ body.Title);
+        console.log("Year: "+ body.Year);
+        console.log("imdb Rating: " + body.imdbRating);
+        console.log("Country: " + body.Country);
+        console.log("Language: " + body.Language);
+        console.log("Plot: " + body.Plot);
+        console.log("Actors: " + body.Actors);
+        console.log("RottenTomatoes Rating: " + body.tomatoRating);
+        console.log("RottenTomatoes Link: " + body.tomatoURL);
+
+        fs.appendFile("log.txt", "Title: " + body.Title + "\r\n", function(err) {
+          if(err) {
+          return console.log(err);
+          }
+        });
+    };
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
