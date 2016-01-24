@@ -1,6 +1,6 @@
 var fs = require('fs');
 var keys = require("./keys.js");
-var twitter = require("twitter");
+var Twitter = require("twitter");
 var spotify = require("spotify");
 var request = require("request");
 var params = process.argv.slice(2);
@@ -11,16 +11,17 @@ switch(params[0]) {
     break;
   case "spotify-this-song":
     if(params[1]){
-      spotifySong(params[1]);
+      spotifySong(params);
     } else {
-      spotifySong("What's may age again?");
+      params[1] = "Whats my age again?"
+      spotifySong(params);
     }
     break;
   case "movie-this":
     if(params[1]){
       movieName(params[1]);
     } else
-      movieName("Mr. Nobody");
+      movieName(params[1] = "Mr. Nobody");
     break;
   case "do-what-it-says":
     readMe(params[0]);
@@ -28,7 +29,7 @@ switch(params[0]) {
 }
 
 function twitterStatus() {
-  var client = new Twitter({
+  var client = new Twitter ({
     consumer_key: keys.twitterKeys.consumer_key,
     consumer_secret: keys.twitterKeys.consumer_secret,
     access_token_key: keys.twitterKeys.access_token_key,
@@ -36,9 +37,9 @@ function twitterStatus() {
   });
   var params = {screen_name: 'ur_mom06'};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
-    if (!error) {
-      for (var i = 0; i < data.length; i++) {
-        console.log(data.text[i]);
+      if (!error) {
+      for (var i = 0; i < tweets.length; i++) {
+        console.log(tweets[i].text);
       };
     } else if (error) {
         console.log("error");
@@ -46,7 +47,7 @@ function twitterStatus() {
   });
 };
 
-function spotifySong() {
+function spotifySong(params) {
   spotify.search({ type: 'track', query: params[1] }, function(err, data) {
     if ( err ) {
       console.log('Error occurred: ' + err);
@@ -94,8 +95,9 @@ function movieName() {
 
 function readMe() {
   fs.readFile("random.txt", "utf8", function(error, data) {
-    data = data.split(",");
-    spotifySong(data[1])
+    var stringArray = data.split(",");
+    //console.log(stringArray[1]);
+    spotifySong(stringArray[1]);
   }); 
 };
 
