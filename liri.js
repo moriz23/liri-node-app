@@ -24,7 +24,7 @@ switch(params[0]) {
       movieName(params[1] = "Mr. Nobody");
     break;
   case "do-what-it-says":
-    readMe(params[0]);
+    readMe(params[1]);
     break;
 }
 
@@ -97,7 +97,7 @@ function readMe() {
   fs.readFile("random.txt", "utf8", function(error, data) {
     var stringArray = data.split(",");
     //console.log(stringArray[1]);
-    spotifySong(stringArray[1]);
+    spotifySong(stringArray);
   }); 
 };
 
